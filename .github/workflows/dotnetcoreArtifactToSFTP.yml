@@ -1,0 +1,52 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: dotnetcore_upload_artifact_to_SFTP-workflow
+
+on:
+  push:
+    branches: none # [ main ]
+  pull_request:
+    branches: none # [ main ]
+    
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-dotnet-app:
+
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: app-dotnet
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+  
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
+    - name: Publish
+      run: dotnet publish -c Release 
+      
+    - name: SFTP uploader
+      uses: wangyucode/sftp-upload-action@v2.0.2
+      with:
+        host: '144.48.77.62'
+        port: '7822'
+        username: 'tomcat'
+        password: 'T0mc@t#987' 
+        localDir: '/home/runner/work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/'
+        remoteDir: '/home/tomcat/code'
