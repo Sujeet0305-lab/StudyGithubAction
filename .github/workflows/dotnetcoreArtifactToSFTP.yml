@@ -43,5 +43,5 @@ jobs:
         port: '7822'
         username: 'tomcat'
         password: 'T0mc@t#987' 
-        localDir: '/home/runner/work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/'
+        localDir: 'D:\actions-runner\_work\StudyGithubAction\StudyGithubAction\app-dotnet\bin\Release\net6.0\publish\'
         remoteDir: '/home/tomcat/code'
