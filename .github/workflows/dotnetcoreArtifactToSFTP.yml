@@ -15,7 +15,7 @@ on:
 jobs:
   build-dotnet-app:
 
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     
     defaults:
       run:
