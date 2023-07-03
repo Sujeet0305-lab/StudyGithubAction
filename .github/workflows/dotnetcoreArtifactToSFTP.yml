@@ -36,12 +36,5 @@ jobs:
     - name: Publish
       run: dotnet publish -c Release 
       
-    - name: SFTP uploader
-      uses: wangyucode/sftp-upload-action@v2.0.2
-      with:
-        host: '144.48.77.62'
-        port: '7822'
-        username: 'tomcat'
-        password: 'T0mc@t#987' 
-        localDir: 'D:\actions-runner\_work\StudyGithubAction\StudyGithubAction\app-dotnet\bin\Release\net6.0\publish\'
-        remoteDir: '/home/tomcat/code'
+    - name: copy to local drive
+      run: Copy-Item D:/actions-runner/_work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/* C:/data/wwwroot/dotnetcore-webapp -Recurse -Force
