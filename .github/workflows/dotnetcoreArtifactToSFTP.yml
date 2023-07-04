@@ -10,6 +10,10 @@ on:
 jobs:
   build-dotnet-app:
     runs-on: self-hosted
+    env:
+      CONFIG: Stage
+      BUILD_FOLDER: _build
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     defaults:
       run:
         working-directory: app-dotnet
