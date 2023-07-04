@@ -10,10 +10,7 @@ on:
 jobs:
   build-dotnet-app:
     runs-on: self-hosted
-    env:
-      CONFIG: Stage
-      BUILD_FOLDER: _build
-      GITHUB_TOKEN: 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
+    
     defaults:
       run:
         working-directory: app-dotnet
@@ -50,7 +47,7 @@ jobs:
 
           Start-Sleep -s 15        
 
-          Copy-Item C:/Users/PAdmin/actions-runner/_work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/* C:/inetpub/wwwroot/dotnetcore-webapp -Recurse -Force
+          Copy-Item C:/actions-runner/_work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/* C:/inetpub/wwwroot/dotnetcore-webapp -Recurse -Force
 
 
           if ((Get-WebSiteState -Name Default-Web-Site).Value -eq "Stopped")
