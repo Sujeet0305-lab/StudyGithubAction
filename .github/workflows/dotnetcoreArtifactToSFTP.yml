@@ -13,7 +13,7 @@ jobs:
     env:
       CONFIG: Stage
       BUILD_FOLDER: _build
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: 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
     defaults:
       run:
         working-directory: app-dotnet
