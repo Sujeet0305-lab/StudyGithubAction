@@ -2,65 +2,63 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
 name: dotnetcore_upload_artifact_to_SFTP-workflow
-
 on:
   push:
-    branches: none # [ main ]
+    branches: none
   pull_request:
-    branches: none # [ main ]
-    
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+    branches: none
+  workflow_dispatch: null
 jobs:
   build-dotnet-app:
-
     runs-on: Dev
-    
     defaults:
       run:
         working-directory: app-dotnet
-
     steps:
-    - uses: actions/checkout@v3
-      
-    - name: Restore dependencies
-      run: dotnet restore
-      
-    - name: Build
-      run: dotnet build --no-restore
-      
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-      
-    - name: Publish
-      run: dotnet publish -c Release 
-      
-    - name: Deploy to IIS
-      run: |
-      if ((Get-WebSiteState -Name Default-Web-Site).Value -eq "Started")
-      {
-          Stop-WebSite -Name Default-Web-Site
-          echo "Stopped Website Default-Web-Site"
-      }
-      if ((Get-WebAppPoolState -Name DefaultAppPool).Value -eq "Started")
-      {
-          Stop-WebAppPool -Name DefaultAppPool
-          echo "Stopped Application Pool DefaultAppPool"
-      }
-      
-      Start-Sleep -s 15        
-      Copy-Item D:/actions-runner/_work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/* C:/inetpub/wwwroot/dotnetcore-webapp -Recurse -Force
-      
-      if ((Get-WebSiteState -Name Default-Web-Site).Value -eq "Stopped")
-      {
-          Start-WebSite -Name Default-Web-Site
-          echo "Started Website Default-Web-Site"
-      }
-      if ((Get-WebAppPoolState -Name DefaultAppPool).Value -eq "Stopped")
-      {
-          Start-WebAppPool -Name DefaultAppPool
-          echo "Started Application Pool DefaultAppPool"
-      }
-      
-      if ($lastexitcode -lt 8) { $global:lastexitcode = 0 }
+      - uses: actions/checkout@v3
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+      - name: Publish
+        run: dotnet publish -c Release
+      - name: Deploy to IIS
+        run: >
+          if ((Get-WebSiteState -Name Default-Web-Site).Value -eq "Started")
+
+          {
+             Stop-WebSite -Name Default-Web-Site
+             echo "Stopped Website Default-Web-Site"
+          }
+
+          if ((Get-WebAppPoolState -Name DefaultAppPool).Value -eq "Started")
+
+          {
+             Stop-WebAppPool -Name DefaultAppPool
+             echo "Stopped Application Pool DefaultAppPool"
+          }
+
+
+          Start-Sleep -s 15        
+
+          Copy-Item D:/actions-runner/_work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/* C:/inetpub/wwwroot/dotnetcore-webapp -Recurse -Force
+
+
+          if ((Get-WebSiteState -Name Default-Web-Site).Value -eq "Stopped")
+
+          {
+             Start-WebSite -Name Default-Web-Site
+             echo "Started Website Default-Web-Site"
+          }
+
+          if ((Get-WebAppPoolState -Name DefaultAppPool).Value -eq "Stopped")
+
+          {
+             Start-WebAppPool -Name DefaultAppPool
+             echo "Started Application Pool DefaultAppPool"
+          }
+
+
+          if ($lastexitcode -lt 8) { $global:lastexitcode = 0 }
