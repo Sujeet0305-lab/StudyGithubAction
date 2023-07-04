@@ -37,7 +37,7 @@ jobs:
       run: dotnet publish -c Release 
       
     - name: Deploy to IIS
-    run: |
+      run: |
       if ((Get-WebSiteState -Name Default-Web-Site).Value -eq "Started")
       {
           Stop-WebSite -Name Default-Web-Site
