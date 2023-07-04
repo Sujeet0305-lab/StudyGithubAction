@@ -46,7 +46,7 @@ jobs:
 
           Start-Sleep -s 15        
 
-          Copy-Item D:/actions-runner/_work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/* C:/inetpub/wwwroot/dotnetcore-webapp -Recurse -Force
+          Copy-Item C:/Users/PAdmin/actions-runner/_work/StudyGithubAction/StudyGithubAction/app-dotnet/bin/Release/net6.0/publish/* C:/inetpub/wwwroot/dotnetcore-webapp -Recurse -Force
 
 
           if ((Get-WebSiteState -Name Default-Web-Site).Value -eq "Stopped")
