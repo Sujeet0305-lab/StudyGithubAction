@@ -9,7 +9,7 @@ on:
   workflow_dispatch: null
 jobs:
   build-dotnet-app:
-    runs-on: self-hosted
+    runs-on: Dev
     
     defaults:
       run:
